@@ -2,6 +2,7 @@ import pywt, cv2
 import numpy as np
 
 def img_normalization(src_img):
+  #白飛び防止の為の正規化をしている
   return ((src_img - np.min(src_img)) / (np.max(src_img) - np.min(src_img)))
 
 def merge_images(cA, cH_V_D):
@@ -18,7 +19,8 @@ def coeffs_visualization(cof):
     norm_cof0 = img_normalization(norm_cof0) # 外してもok
     merge = norm_cof0
     for i in range(1, len(cof)):
-        merge = merge_images(merge, cof[i])  # ４つの画像を合わせていく
+      merge = merge_images(merge, cof[i])  # ４つの画像を合わせていく
+    # 表示パート
     cv2.imshow('', merge)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
@@ -52,5 +54,3 @@ if __name__ == "__main__":
     coeffs_R = wavelet_transform_for_image(im[:, :, R], LEVEL, M_WAVELET=MOTHER_WAVELET)
 
     coeffs_visualization(coeffs_B)
-    # coeffs_visualization(coeffs_G)
-    # coeffs_visualization(coeffs_R)
